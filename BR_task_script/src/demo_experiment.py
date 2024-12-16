@@ -20,7 +20,6 @@ State2.Textures = [right_eye_texture, left_eye_texture]
 
 def first_update_func(state_info: State_Info):
     if state_info.get_elapsed_time() >= iti:
-        print(state_info.get_elapsed_time())
         state_info.reset_timer()
     return State1
 

@@ -73,13 +73,17 @@ with xr.ContextObject(
             break
 
         if frame_index == 0:
-            print("waiting few frames to let it get stable")
+            print("Waiting few frames to let it get stable")
             continue
         elif frame_index < 10:
             continue
         elif frame_index == 10: 
             # Keeping record of the time at the beginnning of the experiment 
             current_info = State_Info()
+
+        if exit_loop:
+            print("Exiting....")
+            break
 
         if current_state is not last_state:
             texture_id_left = current_state.require_texture_left()
@@ -100,13 +104,6 @@ with xr.ContextObject(
                 GL.glBindTexture(GL.GL_TEXTURE_2D, texture_id_right)
                 GL.glBindVertexArray(VAO_right)
                 GL.glDrawElements(GL.GL_TRIANGLES, INDICES_LEN, GL.GL_UNSIGNED_INT, None)
-        
-        if key_pressed == 'a':
-            print("Key 'A' pressed! Performing an action...")
-            # Implement action for 'A'
-        elif key_pressed == 'b':
-            print("Key 'B' pressed! Performing another action...")
-            # Implement action for 'B'   
 
         # update current state information  
         current_info.update_time()
