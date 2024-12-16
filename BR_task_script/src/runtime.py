@@ -5,9 +5,15 @@ class State_Info:
         self.counter = 0
         self.current_time = None
         self.last_time = None 
+        self.keyboard_state = {}
     
-    def update_counter(self, default = 1):
-        self.counter += default
-    
-    def reset_counter(self, default = 0):
-        self.counter = default
+    def update_time(self):
+        self.last_time = self.current_time
+        self.current_time = time()
+
+    def get_elapsed_time(self):
+        return self.current_time - self.last_time
+
+    def reset_timer(self):
+        self.current_time = time()
+        self.last_time = self.current_time

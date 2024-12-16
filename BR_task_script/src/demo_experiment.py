@@ -4,9 +4,8 @@ from textrue import load_texture_from_image
 from time import time 
 
 # settings
-fr = 60
-iti = 2*fr # 2 Seconds
-ibi = 3*fr # 3 Seconds
+iti = 2 # 2 Seconds
+ibi = 3 # 3 Seconds
 
 # Load textures
 left_eye_texture = "../stimuli/grid_lines.png"
@@ -20,10 +19,9 @@ State1.Textures = [left_eye_texture, right_eye_texture]
 State2.Textures = [right_eye_texture, left_eye_texture]
 
 def first_update_func(state_info: State_Info):
-    if state_info.counter == iti:
-        state_info.reset_counter()
-        print(time())
-        return State2
+    if state_info.get_elapsed_time() >= iti:
+        print(state_info.get_elapsed_time())
+        state_info.reset_timer()
     return State1
 
 def second_update_func(state_info: State_Info):

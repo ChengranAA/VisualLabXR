@@ -72,7 +72,7 @@ with xr.ContextObject(
 
 
         # update current state information  
-        current_info.update_counter()
+        current_info.update_time()
         
         # End render current state, check update logic
         current_state = current_state.check_state(current_info)
