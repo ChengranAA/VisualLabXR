@@ -6,8 +6,27 @@ import xr
 from PIL import Image
 import numpy as np
 from OpenGL import GL
-import os, sys
-import time
+from pynput import keyboard
+
+# Global variables for keyboard input
+key_pressed = None
+exit_loop = False
+
+def on_press(key):
+    global key_pressed, exit_loop
+    try:
+        key_pressed = key.char  # Capture key character
+    except AttributeError:
+        if key == keyboard.Key.esc:
+            exit_loop = True  # Exit on Escape key
+
+def on_release(key):
+    global key_pressed
+    key_pressed = None  # Clear the key when released
+
+# Set up the keyboard listener
+listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+listener.start()
 
 hw_ratio = 2208/2064
 off_set = 0.3
@@ -81,7 +100,13 @@ with xr.ContextObject(
                 GL.glBindTexture(GL.GL_TEXTURE_2D, texture_id_right)
                 GL.glBindVertexArray(VAO_right)
                 GL.glDrawElements(GL.GL_TRIANGLES, INDICES_LEN, GL.GL_UNSIGNED_INT, None)
-
+        
+        if key_pressed == 'a':
+            print("Key 'A' pressed! Performing an action...")
+            # Implement action for 'A'
+        elif key_pressed == 'b':
+            print("Key 'B' pressed! Performing another action...")
+            # Implement action for 'B'   
 
         # update current state information  
         current_info.update_time()
@@ -90,5 +115,5 @@ with xr.ContextObject(
         current_state = current_state.check_state(current_info)
         
 
-        
+    listener.stop()
             
