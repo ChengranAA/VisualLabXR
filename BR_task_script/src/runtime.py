@@ -4,11 +4,10 @@ class State_Info:
     def __init__(self):
         self.counter = 0
         self.current_time = None
-        self.last_time = None 
+        self.last_time = time()
         self.keyboard_state = {}
     
     def update_time(self):
-        self.last_time = self.current_time
         self.current_time = time()
 
     def get_elapsed_time(self):

@@ -49,10 +49,19 @@ with xr.ContextObject(
     current_state = first_state
     current_info = State_Info()
     
-    for frame_index, frame_state in enumerate(context.frame_loop()): 
+    for frame_index, frame_state in enumerate(context.frame_loop()):
         # Check if current_state does not exxit
         if current_state is None:
             break
+
+        if frame_index == 0:
+            print("waiting few frames to let it get stable")
+            continue
+        elif frame_index < 10:
+            continue
+        elif frame_index == 10: 
+            # Keeping record of the time at the beginnning of the experiment 
+            current_info = State_Info()
 
         for view_index, view in enumerate(context.view_loop(frame_state)):
             
@@ -73,7 +82,6 @@ with xr.ContextObject(
 
         # update current state information  
         current_info.update_time()
-        
         # End render current state, check update logic
         current_state = current_state.check_state(current_info)
 
