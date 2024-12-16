@@ -45,9 +45,8 @@ with xr.ContextObject(
     VAO_right = set_up_opengl(vertices_right)
 
     # Rendering loop
-    counter = 0
     current_state = first_state
-    current_info = State_Info()
+    last_state = None
     
     for frame_index, frame_state in enumerate(context.frame_loop()):
         # Check if current_state does not exxit
@@ -63,6 +62,10 @@ with xr.ContextObject(
             # Keeping record of the time at the beginnning of the experiment 
             current_info = State_Info()
 
+        if current_state is not last_state:
+            texture_id_left = current_state.require_texture_left()
+            texture_id_right = current_state.require_texture_right()
+        
         for view_index, view in enumerate(context.view_loop(frame_state)):
             
             GL.glClear(GL.GL_COLOR_BUFFER_BIT)
@@ -70,12 +73,12 @@ with xr.ContextObject(
             # Bind the correct texture for the current eye
             if view_index == 0:
                 GL.glUseProgram(program_left)
-                GL.glBindTexture(GL.GL_TEXTURE_2D, current_state.require_texture_left())
+                GL.glBindTexture(GL.GL_TEXTURE_2D, texture_id_left)
                 GL.glBindVertexArray(VAO_left)
                 GL.glDrawElements(GL.GL_TRIANGLES, INDICES_LEN, GL.GL_UNSIGNED_INT, None)
             elif view_index == 1:
                 GL.glUseProgram(program_right)
-                GL.glBindTexture(GL.GL_TEXTURE_2D, current_state.require_texture_right())
+                GL.glBindTexture(GL.GL_TEXTURE_2D, texture_id_right)
                 GL.glBindVertexArray(VAO_right)
                 GL.glDrawElements(GL.GL_TRIANGLES, INDICES_LEN, GL.GL_UNSIGNED_INT, None)
 
@@ -83,7 +86,9 @@ with xr.ContextObject(
         # update current state information  
         current_info.update_time()
         # End render current state, check update logic
+        last_state = current_state
         current_state = current_state.check_state(current_info)
+        
 
         
             
