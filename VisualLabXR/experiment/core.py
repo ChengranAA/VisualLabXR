@@ -1,7 +1,7 @@
 from Example_VR_Template.BR_task_script.VisualLabXR.experiment.opengl_related import wrappers
 import xr 
 import numpy as np 
-from opengl_related import defaults, shader
+from graphics import defaults, shader
 
 class core:
     def __init__(self, entry):

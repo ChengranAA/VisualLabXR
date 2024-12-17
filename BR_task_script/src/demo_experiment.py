@@ -8,8 +8,10 @@ iti = 2 # 2 Seconds
 ibi = 3 # 3 Seconds
 
 # Load textures
-left_eye_texture = "../stimuli/grid_lines.png"
-right_eye_texture = "../stimuli/grid_lines.png"
+left_eye_texture = "../stimuli/b_h_with_checker.png"
+right_eye_texture = "../stimuli/r_v_with_checker.png"
+#left_eye_texture = "../stimuli/grid_lines.png"
+#right_eye_texture = "../stimuli/grid_lines.png"
 
 # Set up State Machine 
 State1 = state()
